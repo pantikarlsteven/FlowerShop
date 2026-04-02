@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="FlowerShop.Api/FlowerShop.Api.csproj" />
+    <Project Path="FlowerShop.Application/FlowerShop.Application.csproj" />
+    <Project Path="FlowerShop.Domain/FlowerShop.Domain.csproj" />
+    <Project Path="FlowerShop.Infrastructure/FlowerShop.Infrastructure.csproj" />
+  </Folder>
+</Solution>
