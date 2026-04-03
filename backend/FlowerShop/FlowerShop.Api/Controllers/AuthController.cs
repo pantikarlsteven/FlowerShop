@@ -1,46 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FlowerShop.Application.DTOs;
+using FlowerShop.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FlowerShop.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        private readonly JwtService _jwt;
+        private readonly IJwtService _jwt;
+        private readonly IAuthService _authService;
 
-        public AuthController(AppDbContext context, JwtService jwt)
+        public AuthController(IJwtService jwt, IAuthService authService)
         {
-            _context = context;
             _jwt = jwt;
-        }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDto dto)
-        {
-            var user = new User
-            {
-                Username = dto.Username,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return Ok();
+            _authService = authService;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            var user = await _context.Users
-                .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Username == dto.Username);
+
+            var user = await _authService.Login(dto);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
                 return Unauthorized();
 
-            var token = _jwt.GenerateToken(user);
+            var token = _jwt.Generate(user);
 
             return Ok(new { token });
         }
