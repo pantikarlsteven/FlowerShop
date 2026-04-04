@@ -34,7 +34,7 @@ builder.Services.AddAuthentication("Bearer")
             ValidateAudience = false,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey =
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SUPER_SECRET_KEY"))
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes("THIS_IS_SUPER_SECRET_CONFIDENTIAL_KEY"))
         };
     });
 
