@@ -7,6 +7,8 @@ import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminProducts from "./pages/admin/Products";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminOrders from "./pages/admin/Orders";
 
 function App() {
   return (
@@ -20,7 +22,18 @@ function App() {
           <Route path="/login" element={<Login />} />
 
           {/* ADMIN */}
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin" element={
+            <ProtectedRoute role="Admin">
+              <AdminDashboard />
+            </ProtectedRoute>} />
+          <Route
+            path="/admin/orders"
+            element={
+              <ProtectedRoute role="Admin">
+                <AdminOrders />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/admin/products" element={<AdminProducts />} />
         </Routes>
       </Layout>

@@ -10,7 +10,7 @@ export default function Cart() {
   }, []);
 
   const total = items.reduce(
-    (sum, i) => sum + (i.price || 0) * i.quantity,
+    (sum, i) => sum + (i.product.price || 0) * i.quantity,
     0
   );
 
@@ -20,7 +20,7 @@ export default function Cart() {
 
       {items.map((i) => (
         <div key={i.productId} className="flex justify-between mb-2">
-          <span>{i.name}</span>
+          <span>{i.product.name}</span>
           <span>x{i.quantity}</span>
         </div>
       ))}

@@ -3,8 +3,12 @@ import { create } from "zustand";
 interface CartItem {
   productId: string;
   quantity: number;
-  name?: string;
-  price?: number;
+  product: Product;
+}
+
+interface Product {
+  name: string;
+  price: number;
 }
 
 interface CartState {
